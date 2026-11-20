@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Афиша Кипра</title>
+<meta name="description" content="Куда сходить на Кипре на этой неделе: концерты, ярмарки, спектакли, прогулки. От канала «Вокруг Кипра».">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗓</text></svg>">
+<style>
+  :root {
+    --bg: #fbf7f1;
+    --card: #ffffff;
+    --ink: #1f2a37;
+    --muted: #6b7280;
+    --line: #ece4d8;
+    --sea: #1f6f8b;
+    --sea-soft: #e3f0f4;
+    --clay: #c2603a;
+    --clay-soft: #f8e7df;
+    --shadow: 0 1px 2px rgba(31, 42, 55, .06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #14181d; --card: #1c2229; --ink: #e8e6e3; --muted: #9aa3ad; --line: #2b333c;
+      --sea: #6cb7d1; --sea-soft: #1d3440; --clay: #e48a64; --clay-soft: #3a2620; --shadow: none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #14181d; --card: #1c2229; --ink: #e8e6e3; --muted: #9aa3ad; --line: #2b333c;
+    --sea: #6cb7d1; --sea-soft: #1d3440; --clay: #e48a64; --clay-soft: #3a2620; --shadow: none;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px 48px; }
+  header { padding: 28px 0 8px; }
+  h1 { font-size: 28px; line-height: 1.15; margin: 0 0 6px; letter-spacing: -.01em; }
+  .sub { color: var(--muted); margin: 0; font-size: 15px; }
+  .sub a { color: var(--sea); }
+
+  .chips {
+    position: sticky; top: 0; z-index: 5; background: var(--bg);
+    display: flex; gap: 8px; overflow-x: auto; padding: 14px 0 12px; margin: 8px 0 4px;
+    scrollbar-width: none;
+  }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip {
+    flex: none; border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    border-radius: 999px; padding: 7px 14px; font: inherit; font-size: 14px; cursor: pointer;
+  }
+  .chip span { color: var(--muted); margin-left: 4px; }
+  .chip[aria-pressed="true"] { background: var(--sea); border-color: var(--sea); color: #fff; }
+  .chip[aria-pressed="true"] span { color: rgba(255,255,255,.75); }
+
+  h2 { font-size: 20px; margin: 28px 0 4px; }
+  .note { color: var(--muted); font-size: 14px; margin: 0 0 8px; }
+
+  .day { margin-top: 18px; }
+  .day h3 {
+    display: flex; align-items: baseline; gap: 8px; margin: 0 0 8px;
+    font-size: 15px; text-transform: uppercase; letter-spacing: .04em; color: var(--clay);
+  }
+  .day h3 small { text-transform: none; letter-spacing: 0; color: var(--muted); font-weight: 400; font-size: 14px; }
+  .day.empty { display: none; }
+
+  .ev {
+    display: grid; grid-template-columns: 30px 1fr; gap: 2px 10px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 12px 14px; margin-bottom: 8px; box-shadow: var(--shadow);
+    color: inherit; text-decoration: none;
+  }
+  .ev:hover { border-color: var(--sea); }
+  .ev .em { font-size: 22px; line-height: 1.2; grid-row: span 2; }
+  .ev .t { font-weight: 600; }
+  .ev .meta { color: var(--muted); font-size: 14px; }
+  .ev .meta b { color: var(--ink); font-weight: 600; }
+  .ev .city { color: var(--sea); }
+  .ev.top { border-left: 4px solid var(--clay); }
+  .badge {
+    display: inline-block; font-size: 12px; padding: 1px 7px; border-radius: 6px;
+    background: var(--clay-soft); color: var(--clay); margin-left: 6px; vertical-align: 2px; font-weight: 600;
+  }
+  .hidden { display: none !important; }
+  .nothing { color: var(--muted); font-size: 14px; padding: 6px 0; }
+
+  footer { color: var(--muted); font-size: 13px; margin-top: 36px; border-top: 1px solid var(--line); padding-top: 14px; }
+  footer a { color: var(--sea); }
+  @media (min-width: 640px) { h1 { font-size: 34px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Куда сходить на Кипре</h1>
+    <p class="sub" id="sub">Загружаю…</p>
+  </header>
+
+  <div class="chips" id="chips" role="toolbar" aria-label="Город"></div>
+
+  <main id="main"></main>
+
+  <footer>
+    Собрано из публичных Telegram-каналов
+    <a href="https://t.me/cyproplan">@cyproplan</a>,
+    <a href="https://t.me/cyprusjournalmusic">@cyprusjournalmusic</a>,
+    <a href="https://t.me/limassol_afisha">@limassol_afisha</a>.
+    Нажмите на событие, чтобы открыть исходный пост. Время и цены лучше перепроверять там.<br>
+    Канал <a href="https://t.me/vokruhkipra">«Вокруг Кипра»</a>.
+  </footer>
+</div>
+
+<script>
+const WD = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
+const WD_FULL = ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота"];
+const MONTHS = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+const MAIN_CITIES = ["Лимасол", "Никосия", "Пафос", "Ларнака"];
+
+const d = s => new Date(s + "T12:00:00");
+const iso = dt => dt.toISOString().slice(0, 10);
+const addDays = (dt, n) => { const x = new Date(dt); x.setDate(x.getDate() + n); return x; };
+const human = dt => `${dt.getDate()} ${MONTHS[dt.getMonth()]}`;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const group = city => MAIN_CITIES.includes(city) ? city : "Другие места";
+
+function card(e, opts = {}) {
+  const bits = [`<span class="city">${esc(e.city)}</span>`];
+  if (e.time) bits.push(`<b>${esc(e.time)}</b>`);
+  if (e.place) bits.push(esc(e.place));
+  if (e.price) bits.push(esc(e.price));
+  if (opts.range && e.end) bits.push(`до ${human(d(e.end))}`);
+  const top = e.top ? '<span class="badge">выбор канала</span>' : "";
+  return `<a class="ev${e.top ? " top" : ""}" data-city="${esc(group(e.city))}" href="${esc(e.link)}" target="_blank" rel="noopener">
+    <span class="em">${e.emoji || "•"}</span>
+    <span class="t">${esc(e.title)}${top}</span>
+    <span class="meta">${bits.join(" · ")}</span>
+  </a>`;
+}
+
+function render(data) {
+  const [ws, we] = data.week.map(d);
+  const weekDays = [...Array(Math.round((we - ws) / 864e5) + 1)].map((_, i) => addDays(ws, i));
+  const evs = data.events.map(e => ({ ...e, s: d(e.date), f: d(e.end || e.date) }));
+  const span = e => Math.round((e.f - e.s) / 864e5);
+
+  document.getElementById("sub").innerHTML =
+    `Неделя ${human(ws)} — ${human(we)}. Обновлено ${human(d(data.updated))}.`;
+
+  let html = `<h2>Эта неделя</h2>`;
+  for (const day of weekDays) {
+    const list = evs
+      .filter(e => span(e) <= 7 && e.s <= day && e.f >= day)
+      .sort((a, b) => (a.time || "99").localeCompare(b.time || "99"));
+    html += `<section class="day"><h3>${WD_FULL[day.getDay()]} <small>${human(day)}</small></h3>
+      ${list.map(e => card(e)).join("")}<p class="nothing hidden">В этот день ничего не нашлось</p></section>`;
+  }
+
+  const ongoing = evs.filter(e => span(e) > 7 && e.s <= we && e.f >= ws);
+  if (ongoing.length) {
+    html += `<h2>Идут всю неделю</h2><p class="note">Выставки, ярмарки и фестивали, которые длятся дольше недели</p>
+      <section class="day">${ongoing.map(e => card(e, { range: true })).join("")}</section>`;
+  }
+
+  const later = evs.filter(e => e.s > we).sort((a, b) => a.s - b.s);
+  if (later.length) {
+    html += `<h2>Дальше</h2><p class="note">Что уже анонсировано на ближайшие недели</p>`;
+    const byDay = new Map();
+    for (const e of later) byDay.set(e.date, [...(byDay.get(e.date) || []), e]);
+    for (const [date, list] of byDay) {
+      const day = d(date);
+      html += `<section class="day"><h3>${WD[day.getDay()]} <small>${human(day)}</small></h3>${list.map(e => card(e, { range: true })).join("")}</section>`;
+    }
+  }
+  document.getElementById("main").innerHTML = html;
+
+  const counts = {};
+  for (const e of evs) counts[group(e.city)] = (counts[group(e.city)] || 0) + 1;
+  const chips = ["Все", ...MAIN_CITIES.filter(c => counts[c]), ...(counts["Другие места"] ? ["Другие места"] : [])];
+  const bar = document.getElementById("chips");
+  bar.innerHTML = chips.map(c =>
+    `<button class="chip" aria-pressed="${c === "Все"}" data-c="${esc(c)}">${esc(c)}${c === "Все" ? "" : `<span>${counts[c]}</span>`}</button>`).join("");
+  bar.addEventListener("click", ev => {
+    const b = ev.target.closest(".chip"); if (!b) return;
+    bar.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x === b));
+    filter(b.dataset.c);
+    try { localStorage.setItem("city", b.dataset.c); } catch (_) {}
+  });
+  let saved = null;
+  try { saved = localStorage.getItem("city"); } catch (_) {}
+  const start = bar.querySelector(`.chip[data-c="${saved}"]`);
+  if (start) start.click(); else filter("Все");
+}
+
+function filter(city) {
+  document.querySelectorAll(".ev").forEach(el =>
+    el.classList.toggle("hidden", city !== "Все" && el.dataset.city !== city));
+  document.querySelectorAll(".day").forEach(sec => {
+    const any = sec.querySelector(".ev:not(.hidden)");
+    const empty = sec.querySelector(".nothing");
+    if (empty) empty.classList.toggle("hidden", !!any);
+  });
+}
+
+fetch("events.json", { cache: "no-cache" })
+  .then(r => r.json())
+  .then(render)
+  .catch(() => { document.getElementById("sub").textContent = "Не удалось загрузить афишу. Обновите страницу."; });
+</script>
+</body>
+</html>
