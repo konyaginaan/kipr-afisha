@@ -3,8 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Афиша Кипра</title>
-<meta name="description" content="Куда сходить на Кипре на этой неделе: концерты, ярмарки, спектакли, прогулки. От канала «Вокруг Кипра».">
+<title>Πού πάμε; Афиша Кипра на неделю</title>
+<meta name="description" content="Куда сходить на Кипре на этой неделе: концерты, ярмарки, спектакли, прогулки. От Telegram-канала «Πού πάμε;».">
+<meta property="og:title" content="Куда сходить на Кипре на этой неделе">
+<meta property="og:description" content="Концерты, ярмарки, спектакли, прогулки — по дням и городам. Лимассол, Никосия, Пафос, Ларнака.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗓</text></svg>">
 <style>
   :root {
@@ -40,6 +42,10 @@
   h1 { font-size: 28px; line-height: 1.15; margin: 0 0 6px; letter-spacing: -.01em; }
   .sub { color: var(--muted); margin: 0; font-size: 15px; }
   .sub a { color: var(--sea); }
+  .join {
+    display: inline-block; margin-top: 12px; padding: 9px 14px; border-radius: 10px;
+    background: var(--clay); color: #fff; text-decoration: none; font-weight: 600; font-size: 15px;
+  }
 
   .chips {
     position: sticky; top: 0; z-index: 5; background: var(--bg);
@@ -96,6 +102,7 @@
   <header>
     <h1>Куда сходить на Кипре</h1>
     <p class="sub" id="sub">Загружаю…</p>
+    <a class="join" href="https://t.me/vokruhkipra" target="_blank" rel="noopener">Подписаться в Telegram — главное на неделю каждый понедельник</a>
   </header>
 
   <div class="chips" id="chips" role="toolbar" aria-label="Город"></div>
@@ -108,7 +115,7 @@
     <a href="https://t.me/cyprusjournalmusic">@cyprusjournalmusic</a>,
     <a href="https://t.me/limassol_afisha">@limassol_afisha</a>.
     Нажмите на событие, чтобы открыть исходный пост. Время и цены лучше перепроверять там.<br>
-    Канал <a href="https://t.me/vokruhkipra">«Вокруг Кипра»</a>.
+    Канал <a href="https://t.me/vokruhkipra">«Πού πάμε; · Афиша Кипра»</a>.
   </footer>
 </div>
 
