@@ -36,20 +36,26 @@
   /* ───── Сцена бумажного театра ───── */
   .theatre { position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 35%, #2A201A 0%, #0B0908 75%); }
   .stage { position: relative; max-width: 1200px; margin: 0 auto; aspect-ratio: 16 / 8; min-height: 260px; }
-  .stage svg.scene { position: absolute; left: 5%; right: 5%; top: 11%; bottom: 9%; width: 90%; height: 80%; }
-  .cut { filter: url(#paper-edge); }
-  .sway { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 7s ease-in-out infinite; }
-  .sway.s2 { animation-duration: 9s; animation-delay: -3s; }
+  .scene { position: absolute; left: 7%; right: 7%; top: 6%; bottom: 8%; perspective: 900px; }
+  .scene img { position: absolute; display: block; height: auto; user-select: none; -webkit-user-drag: none; }
+  .scene .back { inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cut { filter: drop-shadow(6px 9px 7px rgba(0,0,0,.45)); }
+  .sun { width: 10%; left: 66%; top: 18%; }
+  .boat { width: 15%; left: 44%; top: 56%; }
+  .village { width: 44%; left: -2%; bottom: -2%; }
+  .cypress { width: 9%; left: 37%; bottom: 0; }
+  .tree { width: 14%; right: 1%; bottom: 1%; }
+  .stall { width: 22%; left: 60%; bottom: -3%; }
+  .sway { transform-origin: 50% 100%; animation: sway 7s ease-in-out infinite; }
   .sway.s3 { animation-duration: 6s; animation-delay: -1s; }
-  .bob { transform-box: fill-box; transform-origin: 50% 80%; animation: bob 5s ease-in-out infinite; }
-  .rise { transform-box: fill-box; transform-origin: 50% 100%; animation: rise 1.6s cubic-bezier(.3,1.35,.5,1) both; }
+  .bob { transform-origin: 50% 80%; animation: bob 5s ease-in-out infinite; }
+  .rise { transform-origin: 50% 100%; animation: rise 1.6s cubic-bezier(.3,1.35,.5,1) both; }
   .d1 { animation-delay: .2s; } .d2 { animation-delay: .45s; } .d3 { animation-delay: .7s; } .d4 { animation-delay: .95s; }
-  .sway.rise { animation: rise 1.6s cubic-bezier(.3,1.35,.5,1) both, sway 7s ease-in-out 1.6s infinite; }
-  @keyframes sway { 0%, 100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.2deg); } }
-  @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-4px) rotate(2deg); } }
-  @keyframes rise { from { transform: rotateX(85deg) scaleY(.1); opacity: 0; } to { transform: none; opacity: 1; } }
-  .twinkle { animation: twinkle 2.6s ease-in-out infinite; }
-  @keyframes twinkle { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+  .sway.rise { animation: rise 1.6s cubic-bezier(.3,1.35,.5,1) var(--dl, .45s) both, sway 7s ease-in-out 2.2s infinite; }
+  .tree.sway.rise { --dl: .7s; }
+  @keyframes sway { 0%, 100% { transform: rotate(-1.4deg); } 50% { transform: rotate(1.4deg); } }
+  @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-2.5deg); } 50% { transform: translateY(-5px) rotate(2.5deg); } }
+  @keyframes rise { from { transform: rotateX(80deg); opacity: 0; } to { transform: none; opacity: 1; } }
 
   /* кулисы, ламбрекен, рампа */
   .curtain { position: absolute; top: 0; bottom: 0; width: 11%; z-index: 3;
@@ -145,7 +151,9 @@
   @media (max-width: 560px) {
     body { font-size: 16px; }
     .stage { aspect-ratio: 16 / 11; min-height: 0; }
-    .stage svg.scene { left: 2%; width: 96%; top: 10%; bottom: 9%; height: 81%; }
+    .scene { left: 4%; right: 4%; top: 9%; }
+    .village { width: 54%; } .cypress { width: 11%; left: 40%; } .tree { width: 17%; }
+    .stall { width: 28%; left: 56%; } .boat { width: 19%; left: 42%; top: 52%; } .sun { width: 13%; }
     .curtain { width: 9%; }
     .valance::after { height: 16px; background-size: 26px 16px;
       background-image: radial-gradient(circle at 50% 0, #7E1D21 0 10px, #5A1417 11px 12px, transparent 13px); }
@@ -156,7 +164,7 @@
     .page { padding: 16px 14px 6px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .sway, .bob, .rise, .twinkle { animation: none !important; }
+    .sway, .bob, .rise { animation: none !important; }
   }
 </style>
 </head>
@@ -164,93 +172,15 @@
 
 <div class="theatre" aria-hidden="true">
   <div class="stage">
-    <svg class="scene" viewBox="0 0 1600 760" preserveAspectRatio="xMidYMax meet">
-      <defs>
-        <!-- рваный бумажный край + акварельная неровность -->
-        <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
-          <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4" result="n"/>
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="9" result="d"/>
-          <feMorphology in="d" operator="dilate" radius="3" result="edge"/>
-          <feFlood flood-color="#F1E8D7"/><feComposite in2="edge" operator="in" result="white"/>
-          <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="9" result="grain"/>
-          <feColorMatrix in="grain" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.5 .55" result="g"/>
-          <feComposite in="d" in2="g" operator="in" result="wash"/>
-          <feBlend in="wash" in2="d" mode="multiply" result="tex"/>
-          <feGaussianBlur in="edge" stdDeviation="6" result="sh"/><feOffset dx="8" dy="10" result="sho"/>
-          <feColorMatrix in="sho" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .45 0" result="shadow"/>
-          <feMerge><feMergeNode in="shadow"/><feMergeNode in="white"/><feMergeNode in="tex"/></feMerge>
-        </filter>
-        <filter id="wash" x="-10%" y="-10%" width="120%" height="120%">
-          <feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="3" seed="2" result="n"/>
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="40"/>
-        </filter>
-        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#3B3552"/><stop offset=".55" stop-color="#B9757A"/><stop offset="1" stop-color="#F0B486"/>
-        </linearGradient>
-        <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#4E86A0"/><stop offset="1" stop-color="#1F5168"/>
-        </linearGradient>
-      </defs>
-
-      <!-- задник: небо акварельной заливкой -->
-      <rect x="-40" y="-40" width="1680" height="840" fill="url(#sky)" filter="url(#wash)"/>
-      <g class="twinkle"><circle cx="210" cy="90" r="3" fill="#FFF1D6"/><circle cx="520" cy="60" r="2.5" fill="#FFF1D6"/><circle cx="1180" cy="80" r="3" fill="#FFF1D6"/><circle cx="1420" cy="140" r="2" fill="#FFF1D6"/></g>
-
-      <!-- солнце -->
-      <circle class="cut rise" cx="1120" cy="330" r="92" fill="#F2A65A"/>
-
-      <!-- дальние горы Троодос -->
-      <path class="cut rise d1" fill="#8E7FA6" d="M-20 470 C 120 360, 230 330, 360 380 S 560 300, 700 350 S 930 290, 1060 360 S 1300 330, 1420 380 S 1560 360, 1640 400 L 1640 560 L -20 560 Z"/>
-
-      <!-- море -->
-      <path class="cut rise d1" fill="url(#sea)" d="M-20 520 C 300 505, 700 530, 1000 512 S 1450 520, 1640 508 L 1640 780 L -20 780 Z"/>
-      <path d="M260 600 q 40 -10 80 0 M760 640 q 50 -12 100 0 M1220 590 q 40 -10 80 0" stroke="#BFE0EC" stroke-width="5" fill="none" stroke-linecap="round" opacity=".7"/>
-
-      <!-- лодка -->
-      <g class="bob cut">
-        <path fill="#C9603A" d="M880 586 L 1010 586 L 985 614 L 905 614 Z"/>
-        <path fill="#F1E8D7" d="M944 584 L 944 500 L 996 576 Z"/>
-      </g>
-
-      <!-- ближний холм с деревней -->
-      <g class="rise d2">
-        <path class="cut" fill="#C9885A" d="M-20 620 C 120 520, 260 500, 400 540 S 600 600, 640 640 L 640 780 L -20 780 Z"/>
-        <g class="cut">
-          <rect x="120" y="520" width="56" height="48" fill="#F4EBDD"/><path fill="#A4472C" d="M114 522 L 148 494 L 182 522 Z"/>
-          <rect x="196" y="530" width="64" height="44" fill="#EFE3CF"/><rect x="214" y="546" width="14" height="20" fill="#2E6E86"/>
-          <rect x="282" y="512" width="46" height="62" fill="#F4EBDD"/><path fill="#2E6E86" d="M282 514 a 23 23 0 0 1 46 0 Z"/>
-          <rect x="302" y="480" width="6" height="14" fill="#F4EBDD"/>
-        </g>
-      </g>
-
-      <!-- кипарисы -->
-      <g class="cut">
-        <path class="sway rise d3" fill="#3F5E3A" d="M560 640 C 540 560, 548 470, 566 420 C 584 470, 592 560, 572 640 Z"/>
-        <path class="sway s2 rise d3" fill="#4C6B43" d="M610 650 C 594 590, 600 520, 614 486 C 628 520, 634 590, 620 650 Z"/>
-      </g>
-
-      <!-- ёлка с гирляндой -->
-      <g class="sway s3 rise d4">
-        <g class="cut">
-          <path fill="#2F5B3E" d="M1380 690 L 1250 690 L 1315 560 Z"/>
-          <path fill="#386A47" d="M1370 610 L 1260 610 L 1315 500 Z"/>
-          <path fill="#41784F" d="M1358 540 L 1272 540 L 1315 450 Z"/>
-          <rect x="1305" y="690" width="20" height="30" fill="#7A4A2C"/>
-        </g>
-        <path d="M1315 432 l 9 18 20 2 -15 13 5 20 -19 -10 -19 10 5 -20 -15 -13 20 -2 Z" fill="#F2C25A" class="cut"/>
-        <g class="twinkle"><circle cx="1290" cy="520" r="6" fill="#F2C25A"/><circle cx="1340" cy="580" r="6" fill="#E46A4E"/><circle cx="1282" cy="650" r="6" fill="#F2C25A"/><circle cx="1350" cy="660" r="6" fill="#F1E8D7"/></g>
-      </g>
-
-      <!-- передний план: лавка ярмарки -->
-      <g class="rise d4">
-        <g class="cut">
-          <rect x="900" y="660" width="230" height="120" fill="#E9D6B6"/>
-          <path fill="#A4472C" d="M884 664 L 1146 664 L 1126 620 L 904 620 Z"/>
-          <path fill="#F1E8D7" d="M904 620 h 37 l -6 44 h -37 Z M978 620 h 37 l 4 44 h -37 Z M1052 620 h 37 l 12 44 h -37 Z"/>
-          <circle cx="950" cy="700" r="12" fill="#E46A4E"/><circle cx="985" cy="700" r="12" fill="#F2A65A"/><circle cx="1020" cy="700" r="12" fill="#C9603A"/>
-        </g>
-      </g>
-    </svg>
+    <div class="scene">
+      <img class="back" src="art/back.webp" alt="">
+      <img class="cut sun rise" src="art/sun.webp" alt="">
+      <img class="cut boat bob" src="art/boat.webp" alt="">
+      <img class="cut village rise d1" src="art/village.webp" alt="">
+      <img class="cut cypress sway rise d2" src="art/cypress.webp" alt="">
+      <img class="cut tree sway s3 rise d3" src="art/tree.webp" alt="">
+      <img class="cut stall rise d4" src="art/stall.webp" alt="">
+    </div>
 
     <div class="valance"></div>
     <div class="curtain l"></div>
