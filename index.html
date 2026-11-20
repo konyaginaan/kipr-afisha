@@ -7,105 +7,273 @@
 <meta name="description" content="Куда сходить на Кипре на этой неделе: концерты, ярмарки, спектакли, прогулки. От Telegram-канала «Πού πάμε;».">
 <meta property="og:title" content="Куда сходить на Кипре на этой неделе">
 <meta property="og:description" content="Концерты, ярмарки, спектакли, прогулки — по дням и городам. Лимассол, Никосия, Пафос, Ларнака.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗓</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎭</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:ital,wght@0,400;0,600;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #fbf7f1;
-    --card: #ffffff;
-    --ink: #1f2a37;
-    --muted: #6b7280;
-    --line: #ece4d8;
-    --sea: #1f6f8b;
-    --sea-soft: #e3f0f4;
-    --clay: #c2603a;
-    --clay-soft: #f8e7df;
-    --shadow: 0 1px 2px rgba(31, 42, 55, .06);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #14181d; --card: #1c2229; --ink: #e8e6e3; --muted: #9aa3ad; --line: #2b333c;
-      --sea: #6cb7d1; --sea-soft: #1d3440; --clay: #e48a64; --clay-soft: #3a2620; --shadow: none;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #14181d; --card: #1c2229; --ink: #e8e6e3; --muted: #9aa3ad; --line: #2b333c;
-    --sea: #6cb7d1; --sea-soft: #1d3440; --clay: #e48a64; --clay-soft: #3a2620; --shadow: none;
+    --night: #14100E;
+    --night-2: #1E1814;
+    --paper: #F1E8D7;
+    --paper-2: #E8DCC5;
+    --ink: #2A211C;
+    --ink-soft: #6B5A4C;
+    --rust: #9A4528;
+    --accent: #E3A781;
+    --sea: #2E6E86;
+    --velvet: #6E1A1C;
+    --gold: #C9A15A;
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
-    margin: 0; background: var(--bg); color: var(--ink);
-    font: 16px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    -webkit-text-size-adjust: 100%;
+    margin: 0; background: var(--night); color: var(--paper);
+    font: 17px/1.5 'Lora', Georgia, serif; -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px 48px; }
-  header { padding: 28px 0 8px; }
-  h1 { font-size: 28px; line-height: 1.15; margin: 0 0 6px; letter-spacing: -.01em; }
-  .sub { color: var(--muted); margin: 0; font-size: 15px; }
-  .sub a { color: var(--sea); }
+  a { color: inherit; }
+
+  /* ───── Сцена бумажного театра ───── */
+  .theatre { position: relative; overflow: hidden; background: radial-gradient(ellipse at 50% 35%, #2A201A 0%, #0B0908 75%); }
+  .stage { position: relative; max-width: 1200px; margin: 0 auto; aspect-ratio: 16 / 8; min-height: 260px; }
+  .stage svg.scene { position: absolute; left: 5%; right: 5%; top: 11%; bottom: 9%; width: 90%; height: 80%; }
+  .cut { filter: url(#paper-edge); }
+  .sway { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 7s ease-in-out infinite; }
+  .sway.s2 { animation-duration: 9s; animation-delay: -3s; }
+  .sway.s3 { animation-duration: 6s; animation-delay: -1s; }
+  .bob { transform-box: fill-box; transform-origin: 50% 80%; animation: bob 5s ease-in-out infinite; }
+  .rise { transform-box: fill-box; transform-origin: 50% 100%; animation: rise 1.6s cubic-bezier(.3,1.35,.5,1) both; }
+  .d1 { animation-delay: .2s; } .d2 { animation-delay: .45s; } .d3 { animation-delay: .7s; } .d4 { animation-delay: .95s; }
+  .sway.rise { animation: rise 1.6s cubic-bezier(.3,1.35,.5,1) both, sway 7s ease-in-out 1.6s infinite; }
+  @keyframes sway { 0%, 100% { transform: rotate(-1.2deg); } 50% { transform: rotate(1.2deg); } }
+  @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-4px) rotate(2deg); } }
+  @keyframes rise { from { transform: rotateX(85deg) scaleY(.1); opacity: 0; } to { transform: none; opacity: 1; } }
+  .twinkle { animation: twinkle 2.6s ease-in-out infinite; }
+  @keyframes twinkle { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+
+  /* кулисы, ламбрекен, рампа */
+  .curtain { position: absolute; top: 0; bottom: 0; width: 11%; z-index: 3;
+    background: repeating-linear-gradient(90deg, #4A0F12 0, #8A2226 14%, #5A1417 28%, #7E1D21 42%, #4A0F12 56%);
+    box-shadow: inset -18px 0 30px rgba(0,0,0,.55); }
+  .curtain.l { left: 0; border-bottom-right-radius: 60% 18%; }
+  .curtain.r { right: 0; transform: scaleX(-1); border-bottom-right-radius: 60% 18%; }
+  .curtain::after { content: ''; position: absolute; left: 30%; right: 22%; top: 52%; height: 10px; border-radius: 6px;
+    background: linear-gradient(var(--gold), #8C6A2E); box-shadow: 0 3px 6px rgba(0,0,0,.5); }
+  .valance { position: absolute; left: 0; right: 0; top: 0; height: 8%; min-height: 18px; z-index: 4;
+    background: linear-gradient(#4A0F12, #7E1D21); border-bottom: 3px solid var(--gold); }
+  .valance::after { content: ''; position: absolute; left: 0; right: 0; top: 100%; height: 26px;
+    background: radial-gradient(circle at 50% 0, #7E1D21 0 16px, #5A1417 17px 19px, transparent 20px) 0 0 / 40px 26px repeat-x;
+    filter: drop-shadow(0 5px 6px rgba(0,0,0,.5)); }
+  .floor { position: absolute; left: 0; right: 0; bottom: 0; height: 10%; z-index: 4;
+    background: linear-gradient(#3A2618, #1B120C); border-top: 3px solid #5C3E26; }
+  .lights { position: absolute; left: 12%; right: 12%; bottom: 7%; height: 10px; z-index: 5; display: flex; justify-content: space-between; }
+  .lights i { width: 10px; height: 10px; border-radius: 50%; background: #FFE3A8;
+    box-shadow: 0 0 10px 4px rgba(255,214,140,.55), 0 -30px 60px 18px rgba(255,200,120,.10); }
+
+  /* афиша-заголовок */
+  .bill { position: relative; z-index: 6; max-width: 760px; margin: -28px auto 0; padding: 0 16px; text-align: center; }
+  .bill .sheet {
+    display: inline-block; background: var(--paper); color: var(--ink); padding: 18px 28px 20px;
+    transform: rotate(-1deg); box-shadow: 0 18px 40px rgba(0,0,0,.6);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45  0 0 0 0 .36  0 0 0 0 .25  0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .eyebrow { font-family: 'Caveat', cursive; font-size: 26px; color: var(--rust); margin: 0; line-height: 1.1; }
+  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 46px; line-height: 1.02; margin: 2px 0 4px; }
+  .dates { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 24px; margin: 0; color: var(--ink-soft); }
   .join {
-    display: inline-block; margin-top: 12px; padding: 9px 14px; border-radius: 10px;
-    background: var(--clay); color: #fff; text-decoration: none; font-weight: 600; font-size: 15px;
+    display: inline-block; margin: 18px 0 0; font-family: 'Caveat', cursive; font-size: 24px; font-weight: 700;
+    color: var(--paper); text-decoration: none; background: var(--rust); padding: 4px 22px; border-radius: 4px;
+    transform: rotate(1deg); box-shadow: 0 8px 20px rgba(0,0,0,.45);
   }
+  .join:hover { background: #B4552F; }
 
-  .chips {
-    position: sticky; top: 0; z-index: 5; background: var(--bg);
-    display: flex; gap: 8px; overflow-x: auto; padding: 14px 0 12px; margin: 8px 0 4px;
-    scrollbar-width: none;
-  }
-  .chips::-webkit-scrollbar { display: none; }
-  .chip {
-    flex: none; border: 1px solid var(--line); background: var(--card); color: var(--ink);
-    border-radius: 999px; padding: 7px 14px; font: inherit; font-size: 14px; cursor: pointer;
-  }
-  .chip span { color: var(--muted); margin-left: 4px; }
-  .chip[aria-pressed="true"] { background: var(--sea); border-color: var(--sea); color: #fff; }
-  .chip[aria-pressed="true"] span { color: rgba(255,255,255,.75); }
+  /* ───── Программка ───── */
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 16px 56px; }
 
-  h2 { font-size: 20px; margin: 28px 0 4px; }
-  .note { color: var(--muted); font-size: 14px; margin: 0 0 8px; }
+  .tickets { position: sticky; top: 0; z-index: 10; margin: 26px -16px 0; padding: 10px 16px 12px;
+    background: linear-gradient(var(--night) 90%, rgba(20,16,14,0)); }
+  .row { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; padding: 4px 2px; }
+  .row::-webkit-scrollbar { display: none; }
+  .row + .row { margin-top: 6px; }
+  .tk {
+    flex: none; font: 600 15px 'Lora', Georgia, serif; color: var(--ink); background: var(--paper-2);
+    border: 0; padding: 6px 12px; cursor: pointer; text-decoration: none; position: relative;
+    -webkit-mask: radial-gradient(circle 5px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+                  radial-gradient(circle 5px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+            mask: radial-gradient(circle 5px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat,
+                  radial-gradient(circle 5px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat;
+  }
+  .tk small { font-weight: 400; color: var(--ink-soft); margin-left: 3px; }
+  .tk.day { text-align: center; min-width: 54px; line-height: 1.15; padding: 5px 10px; }
+  .tk.day b { display: block; font-family: 'Caveat', cursive; font-size: 19px; font-weight: 700; color: var(--rust); }
+  .tk.city[aria-pressed="true"] { background: var(--rust); color: var(--paper); }
+  .tk.city[aria-pressed="true"] small { color: #F2D5C3; }
+  .tk.today { outline: 2px solid var(--accent); outline-offset: -2px; }
 
-  .day { margin-top: 18px; }
-  .day h3 {
-    display: flex; align-items: baseline; gap: 8px; margin: 0 0 8px;
-    font-size: 15px; text-transform: uppercase; letter-spacing: .04em; color: var(--clay);
-  }
-  .day h3 small { text-transform: none; letter-spacing: 0; color: var(--muted); font-weight: 400; font-size: 14px; }
-  .day.empty { display: none; }
+  h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 34px; margin: 36px 0 2px; color: var(--paper); }
+  .note { font-family: 'Caveat', cursive; font-size: 22px; color: var(--accent); margin: 0 0 6px; }
 
-  .ev {
-    display: grid; grid-template-columns: 30px 1fr; gap: 2px 10px;
-    background: var(--card); border: 1px solid var(--line); border-radius: 12px;
-    padding: 12px 14px; margin-bottom: 8px; box-shadow: var(--shadow);
-    color: inherit; text-decoration: none;
+  .page {
+    background: var(--paper); color: var(--ink); margin: 18px 0 0; padding: 18px 18px 8px;
+    box-shadow: 0 14px 34px rgba(0,0,0,.55); position: relative; scroll-margin-top: 130px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45  0 0 0 0 .36  0 0 0 0 .25  0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-  .ev:hover { border-color: var(--sea); }
-  .ev .em { font-size: 22px; line-height: 1.2; grid-row: span 2; }
-  .ev .t { font-weight: 600; }
-  .ev .meta { color: var(--muted); font-size: 14px; }
-  .ev .meta b { color: var(--ink); font-weight: 600; }
-  .ev .city { color: var(--sea); }
-  .ev.top { border-left: 4px solid var(--clay); }
-  .badge {
-    display: inline-block; font-size: 12px; padding: 1px 7px; border-radius: 6px;
-    background: var(--clay-soft); color: var(--clay); margin-left: 6px; vertical-align: 2px; font-weight: 600;
-  }
+  .page:nth-of-type(odd) { transform: rotate(-.35deg); }
+  .page:nth-of-type(even) { transform: rotate(.3deg); }
+  .page h3 { display: flex; align-items: baseline; gap: 10px; margin: 0 0 6px; padding-bottom: 6px; border-bottom: 1px solid #D5C6AA; }
+  .page h3 .wd { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 30px; font-weight: 600; line-height: 1; }
+  .page h3 .dt { font-family: 'Caveat', cursive; font-size: 24px; color: var(--rust); }
+  .page.empty-day h3 { border-bottom: 0; }
+
+  .ev { display: grid; grid-template-columns: 64px 1fr; gap: 0 12px; padding: 10px 0; border-bottom: 1px dashed #D5C6AA; text-decoration: none; color: inherit; }
+  .ev:last-of-type { border-bottom: 0; }
+  .ev .tm { font-family: 'Caveat', cursive; font-size: 24px; font-weight: 700; color: var(--rust); line-height: 1.1; padding-top: 1px; }
+  .ev .tm.wide { font-size: 18px; }
+  .ev .t { font-weight: 600; font-size: 17px; line-height: 1.3; }
+  .ev .t .em { margin-right: 4px; }
+  .ev:hover .t { text-decoration: underline; text-decoration-color: var(--rust); text-underline-offset: 3px; }
+  .ev .meta { grid-column: 2; color: var(--ink-soft); font-size: 14.5px; margin-top: 2px; }
+  .ev .city { color: var(--sea); font-weight: 600; }
+  .star { display: inline-block; font-family: 'Caveat', cursive; font-size: 17px; font-weight: 700; color: var(--paper);
+    background: var(--rust); padding: 0 8px; margin-left: 6px; transform: rotate(-3deg); vertical-align: 2px; line-height: 1.35; }
+  .nothing { font-family: 'Caveat', cursive; font-size: 21px; color: var(--ink-soft); margin: 4px 0 10px; }
   .hidden { display: none !important; }
-  .nothing { color: var(--muted); font-size: 14px; padding: 6px 0; }
 
-  footer { color: var(--muted); font-size: 13px; margin-top: 36px; border-top: 1px solid var(--line); padding-top: 14px; }
-  footer a { color: var(--sea); }
-  @media (min-width: 640px) { h1 { font-size: 34px; } }
+  footer { color: #B8A994; font-size: 14px; margin-top: 44px; padding-top: 16px; border-top: 1px solid #3A2F27; }
+  footer a { color: var(--accent); }
+
+  @media (max-width: 560px) {
+    body { font-size: 16px; }
+    .stage { aspect-ratio: 16 / 11; min-height: 0; }
+    .stage svg.scene { left: 2%; width: 96%; top: 10%; bottom: 9%; height: 81%; }
+    .curtain { width: 9%; }
+    .valance::after { height: 16px; background-size: 26px 16px;
+      background-image: radial-gradient(circle at 50% 0, #7E1D21 0 10px, #5A1417 11px 12px, transparent 13px); }
+    h1 { font-size: 36px; }
+    .bill { margin-top: -20px; }
+    .bill .sheet { padding: 14px 18px 16px; }
+    .ev { grid-template-columns: 54px 1fr; gap: 0 10px; }
+    .page { padding: 16px 14px 6px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sway, .bob, .rise, .twinkle { animation: none !important; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Куда сходить на Кипре</h1>
-    <p class="sub" id="sub">Загружаю…</p>
-    <a class="join" href="https://t.me/vokruhkipra" target="_blank" rel="noopener">Подписаться в Telegram — главное на неделю каждый понедельник</a>
-  </header>
 
-  <div class="chips" id="chips" role="toolbar" aria-label="Город"></div>
+<div class="theatre" aria-hidden="true">
+  <div class="stage">
+    <svg class="scene" viewBox="0 0 1600 760" preserveAspectRatio="xMidYMax meet">
+      <defs>
+        <!-- рваный бумажный край + акварельная неровность -->
+        <filter id="paper-edge" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="9" result="d"/>
+          <feMorphology in="d" operator="dilate" radius="3" result="edge"/>
+          <feFlood flood-color="#F1E8D7"/><feComposite in2="edge" operator="in" result="white"/>
+          <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="9" result="grain"/>
+          <feColorMatrix in="grain" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -.5 .55" result="g"/>
+          <feComposite in="d" in2="g" operator="in" result="wash"/>
+          <feBlend in="wash" in2="d" mode="multiply" result="tex"/>
+          <feGaussianBlur in="edge" stdDeviation="6" result="sh"/><feOffset dx="8" dy="10" result="sho"/>
+          <feColorMatrix in="sho" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .45 0" result="shadow"/>
+          <feMerge><feMergeNode in="shadow"/><feMergeNode in="white"/><feMergeNode in="tex"/></feMerge>
+        </filter>
+        <filter id="wash" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="3" seed="2" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="40"/>
+        </filter>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3B3552"/><stop offset=".55" stop-color="#B9757A"/><stop offset="1" stop-color="#F0B486"/>
+        </linearGradient>
+        <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#4E86A0"/><stop offset="1" stop-color="#1F5168"/>
+        </linearGradient>
+      </defs>
+
+      <!-- задник: небо акварельной заливкой -->
+      <rect x="-40" y="-40" width="1680" height="840" fill="url(#sky)" filter="url(#wash)"/>
+      <g class="twinkle"><circle cx="210" cy="90" r="3" fill="#FFF1D6"/><circle cx="520" cy="60" r="2.5" fill="#FFF1D6"/><circle cx="1180" cy="80" r="3" fill="#FFF1D6"/><circle cx="1420" cy="140" r="2" fill="#FFF1D6"/></g>
+
+      <!-- солнце -->
+      <circle class="cut rise" cx="1120" cy="330" r="92" fill="#F2A65A"/>
+
+      <!-- дальние горы Троодос -->
+      <path class="cut rise d1" fill="#8E7FA6" d="M-20 470 C 120 360, 230 330, 360 380 S 560 300, 700 350 S 930 290, 1060 360 S 1300 330, 1420 380 S 1560 360, 1640 400 L 1640 560 L -20 560 Z"/>
+
+      <!-- море -->
+      <path class="cut rise d1" fill="url(#sea)" d="M-20 520 C 300 505, 700 530, 1000 512 S 1450 520, 1640 508 L 1640 780 L -20 780 Z"/>
+      <path d="M260 600 q 40 -10 80 0 M760 640 q 50 -12 100 0 M1220 590 q 40 -10 80 0" stroke="#BFE0EC" stroke-width="5" fill="none" stroke-linecap="round" opacity=".7"/>
+
+      <!-- лодка -->
+      <g class="bob cut">
+        <path fill="#C9603A" d="M880 586 L 1010 586 L 985 614 L 905 614 Z"/>
+        <path fill="#F1E8D7" d="M944 584 L 944 500 L 996 576 Z"/>
+      </g>
+
+      <!-- ближний холм с деревней -->
+      <g class="rise d2">
+        <path class="cut" fill="#C9885A" d="M-20 620 C 120 520, 260 500, 400 540 S 600 600, 640 640 L 640 780 L -20 780 Z"/>
+        <g class="cut">
+          <rect x="120" y="520" width="56" height="48" fill="#F4EBDD"/><path fill="#A4472C" d="M114 522 L 148 494 L 182 522 Z"/>
+          <rect x="196" y="530" width="64" height="44" fill="#EFE3CF"/><rect x="214" y="546" width="14" height="20" fill="#2E6E86"/>
+          <rect x="282" y="512" width="46" height="62" fill="#F4EBDD"/><path fill="#2E6E86" d="M282 514 a 23 23 0 0 1 46 0 Z"/>
+          <rect x="302" y="480" width="6" height="14" fill="#F4EBDD"/>
+        </g>
+      </g>
+
+      <!-- кипарисы -->
+      <g class="cut">
+        <path class="sway rise d3" fill="#3F5E3A" d="M560 640 C 540 560, 548 470, 566 420 C 584 470, 592 560, 572 640 Z"/>
+        <path class="sway s2 rise d3" fill="#4C6B43" d="M610 650 C 594 590, 600 520, 614 486 C 628 520, 634 590, 620 650 Z"/>
+      </g>
+
+      <!-- ёлка с гирляндой -->
+      <g class="sway s3 rise d4">
+        <g class="cut">
+          <path fill="#2F5B3E" d="M1380 690 L 1250 690 L 1315 560 Z"/>
+          <path fill="#386A47" d="M1370 610 L 1260 610 L 1315 500 Z"/>
+          <path fill="#41784F" d="M1358 540 L 1272 540 L 1315 450 Z"/>
+          <rect x="1305" y="690" width="20" height="30" fill="#7A4A2C"/>
+        </g>
+        <path d="M1315 432 l 9 18 20 2 -15 13 5 20 -19 -10 -19 10 5 -20 -15 -13 20 -2 Z" fill="#F2C25A" class="cut"/>
+        <g class="twinkle"><circle cx="1290" cy="520" r="6" fill="#F2C25A"/><circle cx="1340" cy="580" r="6" fill="#E46A4E"/><circle cx="1282" cy="650" r="6" fill="#F2C25A"/><circle cx="1350" cy="660" r="6" fill="#F1E8D7"/></g>
+      </g>
+
+      <!-- передний план: лавка ярмарки -->
+      <g class="rise d4">
+        <g class="cut">
+          <rect x="900" y="660" width="230" height="120" fill="#E9D6B6"/>
+          <path fill="#A4472C" d="M884 664 L 1146 664 L 1126 620 L 904 620 Z"/>
+          <path fill="#F1E8D7" d="M904 620 h 37 l -6 44 h -37 Z M978 620 h 37 l 4 44 h -37 Z M1052 620 h 37 l 12 44 h -37 Z"/>
+          <circle cx="950" cy="700" r="12" fill="#E46A4E"/><circle cx="985" cy="700" r="12" fill="#F2A65A"/><circle cx="1020" cy="700" r="12" fill="#C9603A"/>
+        </g>
+      </g>
+    </svg>
+
+    <div class="valance"></div>
+    <div class="curtain l"></div>
+    <div class="curtain r"></div>
+    <div class="floor"></div>
+    <div class="lights"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+</div>
+
+<div class="bill">
+  <div class="sheet">
+    <p class="eyebrow">Πού πάμε; — куда идём?</p>
+    <h1>Куда сходить на Кипре</h1>
+    <p class="dates" id="dates">&nbsp;</p>
+  </div><br>
+  <a class="join" href="https://t.me/vokruhkipra" target="_blank" rel="noopener">Подписаться в Telegram</a>
+</div>
+
+<div class="wrap">
+  <nav class="tickets" aria-label="Дни и города">
+    <div class="row" id="days"></div>
+    <div class="row" id="cities" role="toolbar" aria-label="Город"></div>
+  </nav>
 
   <main id="main"></main>
 
@@ -114,7 +282,7 @@
     <a href="https://t.me/cyproplan">@cyproplan</a>,
     <a href="https://t.me/cyprusjournalmusic">@cyprusjournalmusic</a>,
     <a href="https://t.me/limassol_afisha">@limassol_afisha</a>.
-    Нажмите на событие, чтобы открыть исходный пост. Время и цены лучше перепроверять там.<br>
+    Нажмите на событие, чтобы открыть исходный пост, — время и цены лучше перепроверять там.<br>
     Канал <a href="https://t.me/vokruhkipra">«Πού πάμε; · Афиша Кипра»</a>.
   </footer>
 </div>
@@ -126,22 +294,24 @@ const MONTHS = ["января", "февраля", "марта", "апреля", 
 const MAIN_CITIES = ["Лимасол", "Никосия", "Пафос", "Ларнака"];
 
 const d = s => new Date(s + "T12:00:00");
-const iso = dt => dt.toISOString().slice(0, 10);
+const iso = dt => `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-${String(dt.getDate()).padStart(2, "0")}`;
 const addDays = (dt, n) => { const x = new Date(dt); x.setDate(x.getDate() + n); return x; };
 const human = dt => `${dt.getDate()} ${MONTHS[dt.getMonth()]}`;
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const group = city => MAIN_CITIES.includes(city) ? city : "Другие места";
 
 function card(e, opts = {}) {
+  const short = /^\d{1,2}:\d{2}$/.test(e.time || "");
+  const tm = short ? e.time : (opts.range ? "" : "");
   const bits = [`<span class="city">${esc(e.city)}</span>`];
-  if (e.time) bits.push(`<b>${esc(e.time)}</b>`);
+  if (e.time && !short) bits.push(esc(e.time));
   if (e.place) bits.push(esc(e.place));
   if (e.price) bits.push(esc(e.price));
   if (opts.range && e.end) bits.push(`до ${human(d(e.end))}`);
-  const top = e.top ? '<span class="badge">выбор канала</span>' : "";
-  return `<a class="ev${e.top ? " top" : ""}" data-city="${esc(group(e.city))}" href="${esc(e.link)}" target="_blank" rel="noopener">
-    <span class="em">${e.emoji || "•"}</span>
-    <span class="t">${esc(e.title)}${top}</span>
+  const star = e.top ? '<span class="star">выбор</span>' : "";
+  return `<a class="ev" data-city="${esc(group(e.city))}" href="${esc(e.link)}" target="_blank" rel="noopener">
+    <span class="tm">${tm || "—"}</span>
+    <span class="t"><span class="em">${e.emoji || ""}</span>${esc(e.title)}${star}</span>
     <span class="meta">${bits.join(" · ")}</span>
   </a>`;
 }
@@ -151,69 +321,81 @@ function render(data) {
   const weekDays = [...Array(Math.round((we - ws) / 864e5) + 1)].map((_, i) => addDays(ws, i));
   const evs = data.events.map(e => ({ ...e, s: d(e.date), f: d(e.end || e.date) }));
   const span = e => Math.round((e.f - e.s) / 864e5);
+  const today = iso(new Date());
 
-  document.getElementById("sub").innerHTML =
-    `Неделя ${human(ws)} — ${human(we)}. Обновлено ${human(d(data.updated))}.`;
+  document.getElementById("dates").textContent = `${human(ws)} — ${human(we)}`;
 
-  let html = `<h2>Эта неделя</h2>`;
+  let html = `<h2>Программа недели</h2><p class="note">нажмите на событие — откроется анонс</p>`;
   for (const day of weekDays) {
     const list = evs
       .filter(e => span(e) <= 7 && e.s <= day && e.f >= day)
       .sort((a, b) => (a.time || "99").localeCompare(b.time || "99"));
-    html += `<section class="day"><h3>${WD_FULL[day.getDay()]} <small>${human(day)}</small></h3>
-      ${list.map(e => card(e)).join("")}<p class="nothing hidden">В этот день ничего не нашлось</p></section>`;
+    html += `<section class="page${list.length ? "" : " empty-day"}" id="d-${iso(day)}">
+      <h3><span class="wd">${WD_FULL[day.getDay()]}</span><span class="dt">${human(day)}</span></h3>
+      ${list.map(e => card(e)).join("")}<p class="nothing hidden">в этот день ничего не нашлось</p></section>`;
   }
 
   const ongoing = evs.filter(e => span(e) > 7 && e.s <= we && e.f >= ws);
   if (ongoing.length) {
-    html += `<h2>Идут всю неделю</h2><p class="note">Выставки, ярмарки и фестивали, которые длятся дольше недели</p>
-      <section class="day">${ongoing.map(e => card(e, { range: true })).join("")}</section>`;
+    html += `<h2 id="d-all">Всю неделю</h2><p class="note">выставки, ярмарки и фестивали, которые идут дольше недели</p>
+      <section class="page">${ongoing.map(e => card(e, { range: true })).join("")}<p class="nothing hidden">ничего не нашлось</p></section>`;
   }
 
   const later = evs.filter(e => e.s > we).sort((a, b) => a.s - b.s);
   if (later.length) {
-    html += `<h2>Дальше</h2><p class="note">Что уже анонсировано на ближайшие недели</p>`;
-    const byDay = new Map();
-    for (const e of later) byDay.set(e.date, [...(byDay.get(e.date) || []), e]);
-    for (const [date, list] of byDay) {
-      const day = d(date);
-      html += `<section class="day"><h3>${WD[day.getDay()]} <small>${human(day)}</small></h3>${list.map(e => card(e, { range: true })).join("")}</section>`;
+    html += `<h2 id="d-later">Дальше</h2><p class="note">что уже анонсировано на ближайшие недели</p><section class="page">`;
+    let last = "";
+    for (const e of later) {
+      if (e.date !== last) {
+        const day = d(e.date);
+        html += `<h3 style="margin-top:${last ? 14 : 0}px"><span class="wd" style="font-size:24px">${WD_FULL[day.getDay()]}</span><span class="dt">${human(day)}</span></h3>`;
+        last = e.date;
+      }
+      html += card(e, { range: true });
     }
+    html += `<p class="nothing hidden">ничего не нашлось</p></section>`;
   }
   document.getElementById("main").innerHTML = html;
 
+  // билетики дней
+  const days = weekDays.map(day =>
+    `<a class="tk day${iso(day) === today ? " today" : ""}" href="#d-${iso(day)}"><b>${WD[day.getDay()]}</b>${day.getDate()}</a>`);
+  if (ongoing.length) days.push(`<a class="tk day" href="#d-all"><b>все</b>дни</a>`);
+  if (later.length) days.push(`<a class="tk day" href="#d-later"><b>далее</b>дек</a>`);
+  document.getElementById("days").innerHTML = days.join("");
+
+  // билетики городов
   const counts = {};
   for (const e of evs) counts[group(e.city)] = (counts[group(e.city)] || 0) + 1;
   const chips = ["Все", ...MAIN_CITIES.filter(c => counts[c]), ...(counts["Другие места"] ? ["Другие места"] : [])];
-  const bar = document.getElementById("chips");
+  const bar = document.getElementById("cities");
   bar.innerHTML = chips.map(c =>
-    `<button class="chip" aria-pressed="${c === "Все"}" data-c="${esc(c)}">${esc(c)}${c === "Все" ? "" : `<span>${counts[c]}</span>`}</button>`).join("");
+    `<button class="tk city" aria-pressed="${c === "Все"}" data-c="${esc(c)}">${esc(c)}${c === "Все" ? "" : `<small>${counts[c]}</small>`}</button>`).join("");
   bar.addEventListener("click", ev => {
-    const b = ev.target.closest(".chip"); if (!b) return;
-    bar.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x === b));
+    const b = ev.target.closest(".city"); if (!b) return;
+    bar.querySelectorAll(".city").forEach(x => x.setAttribute("aria-pressed", x === b));
     filter(b.dataset.c);
     try { localStorage.setItem("city", b.dataset.c); } catch (_) {}
   });
   let saved = null;
   try { saved = localStorage.getItem("city"); } catch (_) {}
-  const start = bar.querySelector(`.chip[data-c="${saved}"]`);
+  const start = bar.querySelector(`.city[data-c="${saved}"]`);
   if (start) start.click(); else filter("Все");
 }
 
 function filter(city) {
   document.querySelectorAll(".ev").forEach(el =>
     el.classList.toggle("hidden", city !== "Все" && el.dataset.city !== city));
-  document.querySelectorAll(".day").forEach(sec => {
+  document.querySelectorAll(".page").forEach(sec => {
     const any = sec.querySelector(".ev:not(.hidden)");
-    const empty = sec.querySelector(".nothing");
-    if (empty) empty.classList.toggle("hidden", !!any);
+    sec.querySelector(".nothing").classList.toggle("hidden", !!any);
   });
 }
 
 fetch("events.json", { cache: "no-cache" })
   .then(r => r.json())
   .then(render)
-  .catch(() => { document.getElementById("sub").textContent = "Не удалось загрузить афишу. Обновите страницу."; });
+  .catch(() => { document.getElementById("dates").textContent = "Не удалось загрузить афишу — обновите страницу"; });
 </script>
 </body>
 </html>
